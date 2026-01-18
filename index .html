@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Delicious Eats - Restaurant Menu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* Header */
+        header {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 20px 40px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .logo-section {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .logo {
+            width: 60px;
+            height: 60px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .brand-name {
+            font-size: 28px;
+            font-weight: bold;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .datetime {
+            font-size: 14px;
+            color: #555;
+            text-align: right;
+        }
+
+        .date {
+            font-weight: 600;
+            color: #667eea;
+        }
+
+        .time {
+            font-size: 16px;
+            font-weight: bold;
+            color: #764ba2;
+        }
+
+        /* Main Content */
+        main {
+            flex: 1;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            max-width: 600px;
+            width: 100%;
+            animation: slideUp 0.5s ease-out;
+        }
+
+        @keyframes slideUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 10px;
+            font-size: 32px;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #777;
+            margin-bottom: 40px;
+            font-size: 16px;
+        }
+
+        .form-group {
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 10px;
+            color: #555;
+            font-weight: 600;
+            font-size: 16px;
+        }
+
+        select {
+            width: 100%;
+            padding: 15px;
+            border: 2px solid #e0e0e0;
+            border-radius: 12px;
+            font-size: 16px;
+            background: white;
+            color: #333;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23667eea' d='M6 9L1 4h10z'/%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+        }
+
+        select:hover {
+            border-color: #667eea;
+        }
+
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 0 4px rgba(102, 126, 234, 0.1);
+        }
+
+        select:disabled {
+            background-color: #f5f5f5;
+            cursor: not-allowed;
+        }
+
+        .price-display {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 15px;
+            text-align: center;
+            margin-top: 30px;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            animation: fadeIn 0.5s ease-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .price-label {
+            font-size: 18px;
+            margin-bottom: 10px;
+            opacity: 0.9;
+        }
+
+        .price-amount {
+            font-size: 48px;
+            font-weight: bold;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+        }
+
+        .order-btn {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.4);
+        }
+
+        .order-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(102, 126, 234, 0.6);
+        }
+
+        .order-btn:active {
+            transform: translateY(0);
+        }
+
+        .order-btn:disabled {
+            background: #ccc;
+            cursor: not-allowed;
+            box-shadow: none;
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 25px 40px;
+            text-align: center;
+            box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.1);
+        }
+
+        .footer-content {
+            color: #555;
+            font-size: 14px;
+        }
+
+        .footer-links {
+            margin-top: 10px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            flex-wrap: wrap;
+        }
+
+        .footer-links a {
+            color: #667eea;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .footer-links a:hover {
+            color: #764ba2;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header {
+                padding: 15px 20px;
+            }
+
+            .brand-name {
+                font-size: 22px;
+            }
+
+            .logo {
+                width: 50px;
+                height: 50px;
+                font-size: 25px;
+            }
+
+            .container {
+                padding: 30px 20px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .price-amount {
+                font-size: 36px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="logo-section">
+            <div class="logo">🍽️</div>
+            <div class="brand-name">Delicious Eats</div>
+        </div>
+        <div class="datetime">
+            <div class="date" id="date"></div>
+            <div class="time" id="time"></div>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main>
+        <div class="container">
+            <h1>Menu Selection</h1>
+            <p class="subtitle">Choose your favorite restaurant and dish</p>
+
+            <div class="form-group">
+                <label for="restaurant">🏪 Select Restaurant</label>
+                <select id="restaurant">
+                    <option value="">-- Choose a Restaurant --</option>
+                    <option value="pizzaPalace">🍕 Pizza Palace</option>
+                    <option value="burgerHouse">🍔 Burger House</option>
+                    <option value="sushiBar">🍱 Sushi Bar</option>
+                    <option value="tacoTown">🌮 Taco Town</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="item">🍴 Select Item</label>
+                <select id="item" disabled>
+                    <option value="">-- First select a restaurant --</option>
+                </select>
+            </div>
+
+            <div class="price-display">
+                <div class="price-label">Total Price</div>
+                <div class="price-amount" id="price">$0.00</div>
+            </div>
+
+            <button class="order-btn" id="orderBtn" disabled>🛒 Order Now</button>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="footer-content">
+            <p>&copy; 2026 Delicious Eats. All rights reserved.</p>
+            <div class="footer-links">
+                <a href="#about">About Us</a>
+                <a href="#contact">Contact</a>
+                <a href="#privacy">Privacy Policy</a>
+                <a href="#terms">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // Menu data
+        const menuData = {
+            pizzaPalace: {
+                "Margherita Pizza": 12.99,
+                "Pepperoni Pizza": 14.99,
+                "Veggie Supreme": 13.99,
+                "BBQ Chicken Pizza": 15.99
+            },
+            burgerHouse: {
+                "Classic Burger": 8.99,
+                "Cheese Burger": 9.99,
+                "Bacon Burger": 11.99,
+                "Veggie Burger": 8.49
+            },
+            sushiBar: {
+                "California Roll": 10.99,
+                "Salmon Nigiri": 14.99,
+                "Tuna Sashimi": 16.99,
+                "Dragon Roll": 18.99
+            },
+            tacoTown: {
+                "Beef Tacos": 7.99,
+                "Chicken Tacos": 7.49,
+                "Fish Tacos": 9.99,
+                "Veggie Tacos": 6.99
+            }
+        };
+
+        // DOM elements
+        const restaurantSelect = document.getElementById('restaurant');
+        const itemSelect = document.getElementById('item');
+        const priceDisplay = document.getElementById('price');
+        const orderBtn = document.getElementById('orderBtn');
+
+        // Update date and time
+        function updateDateTime() {
+            const now = new Date();
+            const dateOptions = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+            const timeOptions = { hour: '2-digit', minute: '2-digit', second: '2-digit' };
+            
+            document.getElementById('date').textContent = now.toLocaleDateString('en-US', dateOptions);
+            document.getElementById('time').textContent = now.toLocaleTimeString('en-US', timeOptions);
+        }
+
+        updateDateTime();
+        setInterval(updateDateTime, 1000);
+
+        // Restaurant selection handler
+        restaurantSelect.addEventListener('change', function() {
+            const restaurant = this.value;
+            
+            if (restaurant) {
+                itemSelect.disabled = false;
+                itemSelect.innerHTML = '<option value="">-- Choose an Item --</option>';
+                
+                const items = menuData[restaurant];
+                for (const [item, price] of Object.entries(items)) {
+                    const option = document.createElement('option');
+                    option.value = item;
+                    option.textContent = item;
+                    itemSelect.appendChild(option);
+                }
+                
+                priceDisplay.textContent = '$0.00';
+                orderBtn.disabled = true;
+            } else {
+                itemSelect.disabled = true;
+                itemSelect.innerHTML = '<option value="">-- First select a restaurant --</option>';
+                priceDisplay.textContent = '$0.00';
+                orderBtn.disabled = true;
+            }
+        });
+
+        // Item selection handler
+        itemSelect.addEventListener('change', function() {
+            const restaurant = restaurantSelect.value;
+            const item = this.value;
+            
+            if (restaurant && item) {
+                const price = menuData[restaurant][item];
+                priceDisplay.textContent = `$${price.toFixed(2)}`;
+                orderBtn.disabled = false;
+            } else {
+                priceDisplay.textContent = '$0.00';
+                orderBtn.disabled = true;
+            }
+        });
+
+        // Order button handler
+        orderBtn.addEventListener('click', function() {
+            const restaurant = restaurantSelect.value;
+            const item = itemSelect.value;
+            const price = priceDisplay.textContent;
+            
+            alert(`🎉 Order Confirmed!\n\nRestaurant: ${restaurantSelect.options[restaurantSelect.selectedIndex].text}\nItem: ${item}\nPrice: ${price}\n\nThank you for your order!`);
+        });
+    </script>
+</body>
+</html>
